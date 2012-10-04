@@ -1,15 +1,15 @@
 <?php
 //funkcje dołączającepliki
-
+session_start();
 //require 'file';
 //require_once 'file';
 //jeśli nie ma pliku generuje błąd FATAL
 //include 'file'
 require_once 'baza.php';
-
-if(isset($_GET['sortuj']) && $_GET['sortuj'] == "username"){
+require_once 'funkcje.php';
+if(isset($_GET['sortuj']) && $_GET['sortuj'] == "email"){
 	foreach ($users as $klucz => $tablica) {
-    $usernames[$klucz]  = $tablica['username'];
+    $email[$klucz]  = $tablica['email'];
 	
 
 }
@@ -17,7 +17,7 @@ if(isset($_GET['sortuj']) && $_GET['sortuj'] == "username"){
 // Posortuj dane według numeru malejąco i edycji rosnąco
 // Należy podać $dane jako ostatni parametr aby posortować według wspólnego
 // klucza
-array_multisort($usernames, SORT_ASC, $users);
+array_multisort($email, SORT_ASC, $users);
 
 	
 }
@@ -31,9 +31,12 @@ array_multisort($usernames, SORT_ASC, $users);
 	type="text/css" media="screen" title="no title" charset="utf-8"/>
 </head>
 <body>
-	
+	<h3>koszyk</h3>
+	liczba produktów w koszyku <?php echo count($_SESSION['koszyk']); ?>
 	<h1 id="">sklep</h1>
-	<a href="index.php?sortuj=username" class="btn">sortuj według linka</a>
+	<a href="index.php?sortuj=email" class="btn">sortuj według linka</a>
+	<table class="table table-striped table-bordered">
+		<a href="index.php" class="btn">cofnij</a>
 	<table class="table table-striped table-bordered">
 <tr>
 	<?php foreach($users[0] as $klucz => $wartosc){ ?>
@@ -57,6 +60,11 @@ array_multisort($usernames, SORT_ASC, $users);
 </tr>
 <?php } ?>
 </table>
+liczba odwiedzin:
+<?=licznik()?>
 
-</body>
+
+
+
+
 </html>
